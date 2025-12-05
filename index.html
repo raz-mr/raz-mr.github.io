@@ -18,12 +18,12 @@
         <input type="password" id="password" placeholder="Password">
         <button onclick="checkLogin()">Login</button>
         
-        <p id="error-msg" style="color:red; display:none;"> The username or password is incorrect.!</p>
+        <p id="error-msg" style="color:red; display:none;">യൂസർനെയിം അല്ലെങ്കിൽ പാസ്‌വേഡ് തെറ്റാണ്!</p>
         
         <hr>
-        <p>Don't have an account ?</p>
+        <p>അക്കൗണ്ട് ഇല്ലേ?</p>
         <button style="background-color: green;" onclick="window.open('https://forms.gle/AjaVxLgBDJGeQGKT6', '_blank')"
-">Sign Up</button>
+')">Sign Up</button>
     </div>
 
     <script>
@@ -33,8 +33,7 @@
 
             // ഇവിടെയാണ് യൂസർനെയിമും പാസ്‌വേഡും സെറ്റ് ചെയ്യുന്നത്
             if (user === "admin" && pass === "12345") {
-                {
-                alert("Login Successful!");
+                alert("Login വിജയിച്ചു!");
                 window.location.href = "home.html"; // ശരിയാണെങ്കിൽ home.html ലേക്ക് പോകും
             } else {
                 document.getElementById("error-msg").style.display = "block";
