@@ -1,21 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>raz.in</title>
+    <title>My Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; margin: 0; }
+        
+        /* തലക്കെട്ട് (Header) ഡിസൈൻ */
+        .header { background-color: #2c3e50; color: white; padding: 20px; text-align: center; }
+        .header h1 { margin: 0; }
+        
+        /* Logout ബട്ടൺ ഡിസൈൻ */
+        .logout-btn { position: absolute; top: 20px; right: 20px; background-color: #e74c3c; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; }
+        
+        /* ബോക്സുകളുടെ കണ്ടെയ്നർ */
+        .container { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; }
+        
+        /* ഓരോ സോഫ്റ്റ്‌വെയർ ബോക്സും (Card) */
+        .card { background: white; width: 300px; margin: 15px; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; }
+        .card h3 { color: #333; }
+        .card p { color: #666; }
+        
+        /* ഡൗൺലോഡ് ബട്ടൺ */
+        .dwn-btn { background-color: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px; }
+        .dwn-btn:hover { background-color: #2980b9; }
+
+        /* പച്ച ബട്ടൺ (രണ്ടാമത്തെ ഫയലിന്) */
+        .green-btn { background-color: #27ae60; }
+        .green-btn:hover { background-color: #2ecc71; }
+    </style>
 </head>
 <body>
-    <h1>WELCOME!</h1>
-    <p>raz.in.</p>
 
-<br>
-<h3>Download Raz cloud act V1.0 :</h3>
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
 
-<a href="razact_v1.bat" download>
-   <button style="padding: 10px 20px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer;">
-       Download Batch File
-   </button>
-</a>
-    
-    
+    <div class="container">
+        
+        <div class="card">
+            <h3>Wi-Fi Password Finder</h3>
+            <p>സേവ് ചെയ്ത വൈഫൈ പാസ്‌വേഡുകൾ കാണാനുള്ള സ്ക്രിപ്റ്റ്.</p>
+            <a href="razact_v1.bat" class="dwn-btn" download>Download</a>
+        </div>
+
+        <div class="card">
+            <h3>Windows Update Control</h3>
+            <p>അപ്‌ഡേറ്റ് ഓഫ് ചെയ്യാനും ഓൺ ചെയ്യാനും.</p>
+            <a href="razact_v1.bat" class="dwn-btn green-btn" download>Download</a>
+        </div>
+
+        </div>
+
+    <script>
+        function logout() {
+            window.location.href = "index.html";
+        }
+    </script>
+
 </body>
 </html>
