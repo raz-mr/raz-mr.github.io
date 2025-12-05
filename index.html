@@ -32,9 +32,13 @@
             var pass = document.getElementById("password").value;
 
             // ഇവിടെയാണ് യൂസർനെയിമും പാസ്‌വേഡും സെറ്റ് ചെയ്യുന്നത്
-            if (user === "admin" && pass === "12345") {
-                alert("Login വിജയിച്ചു!");
-                window.location.href = "home.html"; // ശരിയാണെങ്കിൽ home.html ലേക്ക് പോകും
+            if ((user === "admin" && pass === "12345") || (user === "raz" && pass === "555")) {
+    // സെഷൻ തുടങ്ങുന്നു
+    sessionStorage.setItem("loggedin", "true"); 
+    alert("Login വിജയിച്ചു!");
+    window.location.href = "home.html";
+            }
+            // ശരിയാണെങ്കിൽ home.html ലേക്ക് പോകും
             } else {
                 document.getElementById("error-msg").style.display = "block";
             }
