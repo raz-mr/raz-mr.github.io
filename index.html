@@ -1,35 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login</title>
     <link rel="icon" type="image/png" href="icon.png">
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #f0f2f5; }
-        .login-box { width: 300px; margin: auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); }
-        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
-        button { width: 100%; padding: 10px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        button:hover { background-color: darkblue; }
-        .signup-btn { background-color: green; margin-top: 10px; }
-        .signup-btn:hover { background-color: darkgreen; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
+            width: 320px;
+            text-align: center;
+        }
+        .login-box h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box; /* Fixes padding issues */
+            transition: 0.3s;
+        }
+        input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .error-msg {
+            color: #e74c3c;
+            font-size: 14px;
+            display: none;
+            margin-top: 10px;
+        }
+        hr {
+            margin: 25px 0;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+        .signup-text {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .signup-btn {
+            background-color: #27ae60;
+        }
+        .signup-btn:hover {
+            background-color: #219150;
+        }
     </style>
 </head>
 <body>
 
     <div class="login-box">
-        <h2>Login Here</h2>
+        <h2>Welcome Back</h2>
         <input type="text" id="username" placeholder="Username">
         <input type="password" id="password" placeholder="Password">
-        <br><br>
         
         <button onclick="checkLogin()">Login</button>
-
-        <p id="error-msg" style="color:red; display:none; margin-top: 10px;">യൂസർനെയിം അല്ലെങ്കിൽ പാസ്‌വേഡ് തെറ്റാണ്!</p>
-
-        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
         
-        <p>അക്കൗണ്ട് ഇല്ലേ?</p>
-        
-        <button class="signup-btn" onclick="window.open('https://forms.gle/AjaVxLgBDJGeQGKT6', '_blank')">Sign Up</button>
+        <p id="error-msg" class="error-msg">Incorrect username or password!</p>
+
+        <hr>
+
+        <p class="signup-text">Don't have an account?</p>
+        <button class="signup-btn" onclick="openSignup()">Create Account</button>
     </div>
 
     <script>
@@ -37,16 +101,19 @@
             var user = document.getElementById("username").value;
             var pass = document.getElementById("password").value;
 
-            // ഇവിടെ അഡ്മിനെയും പുതിയ യൂസറെയും (raz) പരിശോധിക്കുന്നു
+            // Check username and password
             if ((user === "admin" && pass === "12345") || (user === "raz" && pass === "555")) {
-                // സെഷൻ തുടങ്ങുന്നു
-                sessionStorage.setItem("loggedin", "true"); 
-                alert("Login വിജയിച്ചു!");
-                window.location.href = "home.html";
+                sessionStorage.setItem("loggedin", "true");
+                window.location.href = "home.html"; // Redirect on success
             } else {
-                // തെറ്റാണെങ്കിൽ ഈ ഭാഗം പ്രവർത്തിക്കും
                 document.getElementById("error-msg").style.display = "block";
             }
+        }
+
+        function openSignup() {
+            // 🔴 PASTE YOUR GOOGLE FORM LINK BELOW
+            var link = 'https://forms.gle/AjaVxLgBDJGeQGKT6'; 
+            window.open(link, '_blank');
         }
     </script>
 
