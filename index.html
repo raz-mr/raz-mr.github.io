@@ -6,11 +6,15 @@
     <title>Secure Login</title>
     <link rel="icon" type="image/png" href="icon.png">
     <style>
-        body { font-family: sans-serif; background-color: #e9ecef; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-box { background: white; padding: 40px; border-radius: 12px; width: 320px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e9ecef; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0px 10px 25px rgba(0,0,0,0.1); width: 320px; text-align: center; }
+        .login-box h2 { margin-bottom: 20px; color: #333; }
         input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background-color: #3498db; color: white; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; font-weight: bold; }
+        button { width: 100%; padding: 12px; background-color: #3498db; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px; }
         button:hover { background-color: #2980b9; }
+        .error-msg { color: #e74c3c; font-size: 14px; display: none; margin-top: 10px; }
+        hr { margin: 25px 0; border: 0; border-top: 1px solid #eee; }
+        .signup-text { color: #666; font-size: 14px; margin-bottom: 10px; }
         .signup-btn { background-color: #27ae60; }
         .signup-btn:hover { background-color: #219150; }
     </style>
@@ -19,25 +23,24 @@
 
     <div class="login-box">
         <h2>Welcome Back</h2>
-        <p style="color:#666; font-size:14px;">Login with Phone & Password</p>
-        
-        <input type="text" id="phoneInput" placeholder="Phone (+91 9999999999)">
-        <input type="password" id="passwordInput" placeholder="Password">
+        <input type="email" id="email" placeholder="Email Address">
+        <input type="password" id="password" placeholder="Password">
         
         <button onclick="loginUser()">Login</button>
         
-        <p id="error-msg" style="color:red; display:none; margin-top:10px;">നമ്പർ അല്ലെങ്കിൽ പാസ്‌വേഡ് തെറ്റാണ്!</p>
+        <p id="error-msg" class="error-msg">Incorrect email or password!</p>
 
-        <hr style="margin: 25px 0; border: 0; border-top: 1px solid #eee;">
-        
-        <p style="color:#666; font-size:14px;">New User?</p>
-        <button class="signup-btn" onclick="window.location.href='signup.html'">Verify & Signup</button>
+        <hr>
+
+        <p class="signup-text">Don't have an account?</p>
+        <button class="signup-btn" onclick="window.location.href='signup.html'">Create Account</button>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+        // നിങ്ങളുടെ Firebase Config ഇവിടെ (ഇത് മാറ്റേണ്ടതില്ല)
         const firebaseConfig = {
             apiKey: "AIzaSyBTfD4BXwMaWGmgk8QMBmQWvBA_u1DABls",
             authDomain: "raz-login-system.firebaseapp.com",
@@ -51,21 +54,23 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
+        // ലോഗിൻ ഫംഗ്‌ഷൻ (ഇമെയിൽ വെച്ച്)
         window.loginUser = function() {
-            const phone = document.getElementById("phoneInput").value;
-            const pass = document.getElementById("passwordInput").value;
-            
-            // ഫോൺ നമ്പർ വെച്ച് നമ്മൾ ഉണ്ടാക്കിയ ഫേക്ക് ഇമെയിൽ റീ-ക്രിയേറ്റ് ചെയ്യുന്നു
-            const fakeEmail = phone + "@raz.com";
+            const email = document.getElementById("email").value;
+            const pass = document.getElementById("password").value;
+            const errorMsg = document.getElementById("error-msg");
 
-            signInWithEmailAndPassword(auth, fakeEmail, pass)
+            signInWithEmailAndPassword(auth, email, pass)
             .then((userCredential) => {
+                // ലോഗിൻ വിജയിച്ചു
                 sessionStorage.setItem("loggedin", "true");
                 window.location.href = "home.html";
             })
             .catch((error) => {
-                console.log(error);
-                document.getElementById("error-msg").style.display = "block";
+                // ലോഗിൻ പരാജയപ്പെട്ടു
+                console.log(error.code);
+                errorMsg.style.display = "block";
+                errorMsg.innerText = "Email അല്ലെങ്കിൽ Password തെറ്റാണ്!";
             });
         }
     </script>
