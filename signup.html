@@ -3,39 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account</title>
+    <title>Verify & Signup</title>
     <link rel="icon" type="image/png" href="icon.png">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e9ecef; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .signup-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0px 10px 25px rgba(0,0,0,0.1); width: 320px; text-align: center; }
-        .signup-box h2 { margin-bottom: 20px; color: #333; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background-color: #27ae60; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px; }
+        body { font-family: sans-serif; background-color: #e9ecef; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { background: white; padding: 30px; border-radius: 10px; width: 320px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; }
         button:hover { background-color: #219150; }
-        .back-link { display: block; margin-top: 20px; color: #666; text-decoration: none; font-size: 14px; }
+        #recaptcha-container { margin-top: 15px; }
     </style>
 </head>
 <body>
 
-    <div class="signup-box">
+    <div class="login-box">
         <h2>Create Account</h2>
-        <p style="color:#666; font-size:14px;">Enter details to register automatically.</p>
-        
-        <input type="email" id="email" placeholder="Email Address" required>
-        <input type="password" id="password" placeholder="Choose Password (min 6 chars)" required>
-        
-        <button onclick="registerUser()">Register Now</button>
-        <p id="msg" style="color:red; display:none; margin-top:10px;"></p>
+        <p>Verify number to set password</p>
 
-        <a href="index.html" class="back-link">← Back to Login</a>
+        <div id="otp-section">
+            <input type="text" id="phoneNumber" placeholder="+91 9999999999">
+            <div id="recaptcha-container"></div>
+            
+            <button id="sendBtn" onclick="sendOTP()">Get OTP</button>
+
+            <div id="otp-input-box" style="display:none;">
+                <input type="text" id="otpCode" placeholder="Enter 6-digit OTP">
+                <button onclick="verifyOTP()">Verify OTP</button>
+            </div>
+        </div>
+
+        <div id="password-section" style="display: none;">
+            <h3 style="color:green;">Verified! ✅</h3>
+            <p>Now set a password for login</p>
+            <input type="password" id="newPassword" placeholder="Set a Password">
+            <button onclick="completeSignup()">Finish Signup</button>
+        </div>
+
+        <p id="msg" style="color:red; margin-top:10px;"></p>
+        <a href="index.html" style="display:block; margin-top:20px; text-decoration:none; color:#666;">← Back to Login</a>
     </div>
 
     <script type="module">
-        // ഫയർബേസ് കണക്ട് ചെയ്യുന്നു
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // നിങ്ങളുടെ കോഡ് ഇവിടെ ചേർക്കുന്നു
         const firebaseConfig = {
             apiKey: "AIzaSyBTfD4BXwMaWGmgk8QMBmQWvBA_u1DABls",
             authDomain: "raz-login-system.firebaseapp.com",
@@ -48,32 +59,60 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        auth.languageCode = 'en';
 
-        // രജിസ്ട്രേഷൻ ഫംഗ്‌ഷൻ
-        window.registerUser = function() {
-            const email = document.getElementById("email").value;
-            const pass = document.getElementById("password").value;
-            const msg = document.getElementById("msg");
-
-            if(pass.length < 6) {
-                msg.style.display = "block";
-                msg.innerText = "പാസ്‌വേഡിൽ കുറഞ്ഞത് 6 അക്ഷരങ്ങൾ വേണം!";
-                return;
+        // 1. Recaptcha Setup
+        window.setupRecaptcha = function() {
+            if(!window.recaptchaVerifier) {
+                window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'normal' });
+                window.recaptchaVerifier.render();
             }
+        }
+        setupRecaptcha();
 
-            createUserWithEmailAndPassword(auth, email, pass)
+        // 2. Send OTP
+        window.sendOTP = function() {
+            const phoneNumber = document.getElementById("phoneNumber").value;
+            const appVerifier = window.recaptchaVerifier;
+
+            signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+                .then((confirmationResult) => {
+                    window.confirmationResult = confirmationResult;
+                    alert("OTP അയച്ചു! (Test Code: 123456)");
+                    document.getElementById("sendBtn").style.display = "none";
+                    document.getElementById("otp-input-box").style.display = "block";
+                }).catch((error) => {
+                    document.getElementById("msg").innerText = error.message;
+                });
+        }
+
+        // 3. Verify OTP
+        window.verifyOTP = function() {
+            const code = document.getElementById("otpCode").value;
+            window.confirmationResult.confirm(code).then((result) => {
+                // വിജയിച്ചു! പാസ്‌വേഡ് ബോക്സ് കാണിക്കുന്നു
+                document.getElementById("otp-section").style.display = "none";
+                document.getElementById("password-section").style.display = "block";
+            }).catch((error) => {
+                document.getElementById("msg").innerText = "OTP തെറ്റാണ്!";
+            });
+        }
+
+        // 4. Create Account (Final Step)
+        window.completeSignup = function() {
+            const phone = document.getElementById("phoneNumber").value;
+            const password = document.getElementById("newPassword").value;
+            
+            // ഫോൺ നമ്പർ വെച്ച് ഒരു ഫേക്ക് ഇമെയിൽ ഉണ്ടാക്കുന്നു
+            const fakeEmail = phone + "@raz.com"; 
+
+            createUserWithEmailAndPassword(auth, fakeEmail, password)
             .then((userCredential) => {
-                alert("അക്കൗണ്ട് വിജയകരമായി ക്രിയേറ്റ് ചെയ്തു! ഇനി ലോഗിൻ ചെയ്യാം.");
+                alert("അക്കൗണ്ട് റെഡി! ഇനി പാസ്‌വേഡ് വെച്ച് ലോഗിൻ ചെയ്യാം.");
                 window.location.href = "index.html";
             })
             .catch((error) => {
-                msg.style.display = "block";
-                // എറർ മെസ്സേജ് ലളിതമാക്കുന്നു
-                if(error.code === "auth/email-already-in-use") {
-                    msg.innerText = "ഈ ഇമെയിൽ നേരത്തെ രജിസ്റ്റർ ചെയ്തിട്ടുണ്ട്.";
-                } else {
-                    msg.innerText = "എറർ: " + error.message;
-                }
+                document.getElementById("msg").innerText = error.message;
             });
         }
     </script>
