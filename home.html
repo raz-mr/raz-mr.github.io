@@ -1,70 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Dashboard</title>
+    <meta charset="UTF-8">
+    <title>Raz Dashboard</title>
+    <link rel="icon" type="image/png" href="icon.png">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; margin: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; }
         
-        /* തലക്കെട്ട് (Header) ഡിസൈൻ */
-        .header { background-color: #2c3e50; color: white; padding: 20px; text-align: center; }
-        .header h1 { margin: 0; }
-        
-        /* Logout ബട്ടൺ ഡിസൈൻ */
-        .logout-btn { position: absolute; top: 20px; right: 20px; background-color: #e74c3c; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; }
-        
-        /* ബോക്സുകളുടെ കണ്ടെയ്നർ */
-        .container { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; }
-        
-        /* ഓരോ സോഫ്റ്റ്‌വെയർ ബോക്സും (Card) */
-        .card { background: white; width: 300px; margin: 15px; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; }
-        .card h3 { color: #333; }
-        .card p { color: #666; }
-        
-        /* ഡൗൺലോഡ് ബട്ടൺ */
-        .dwn-btn { background-color: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px; }
-        .dwn-btn:hover { background-color: #2980b9; }
+        /* Navbar Design */
+        .navbar { background-color: #2c3e50; overflow: hidden; padding: 15px 20px; color: white; display: flex; justify-content: space-between; align-items: center; }
+        .navbar h1 { margin: 0; font-size: 24px; }
+        .logout-btn { background-color: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .logout-btn:hover { background-color: #c0392b; }
 
-        /* പച്ച ബട്ടൺ (രണ്ടാമത്തെ ഫയലിന്) */
-        .green-btn { background-color: #27ae60; }
-        .green-btn:hover { background-color: #2ecc71; }
+        /* Welcome Message */
+        .welcome-box { text-align: center; padding: 40px; }
+        .welcome-box h2 { color: #333; }
+        .welcome-box p { color: #666; }
+
+        /* Tools Grid */
+        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 20px; }
+        
+        /* Card Design */
+        .card { background: white; width: 300px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; transition: transform 0.3s; text-align: center; }
+        .card:hover { transform: translateY(-5px); }
+        
+        /* Image inside card */
+        .card img { width: 100%; height: 180px; object-fit: cover; border-bottom: 1px solid #eee; }
+        
+        .card-content { padding: 20px; }
+        .card h3 { margin: 10px 0; color: #2c3e50; }
+        .card p { color: #7f8c8d; font-size: 14px; height: 40px; }
+        
+        /* Download Button */
+        .dwn-btn { display: inline-block; background-color: #3498db; color: white; padding: 10px 25px; text-decoration: none; border-radius: 25px; margin-top: 15px; font-weight: bold; transition: 0.3s; }
+        .dwn-btn:hover { background-color: #2980b9; box-shadow: 0 4px 10px rgba(52, 152, 219, 0.4); }
+
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>Admin Dashboard</h1>
+    <div class="navbar">
+        <h1>Raz Tools Store</h1>
         <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="welcome-box">
+        <h2>Premium Batch Scripts</h2>
+        <p>Download powerful automation tools for your PC.</p>
     </div>
 
     <div class="container">
         
         <div class="card">
-            <h3>Wi-Fi Password Finder</h3>
-            <p>സേവ് ചെയ്ത വൈഫൈ പാസ്‌വേഡുകൾ കാണാനുള്ള സ്ക്രിപ്റ്റ്.</p>
-            <a href="razact_v1.bat" class="dwn-btn" download>Download</a>
+            <img src="wifi.png" alt="Wifi Tool">
+            <div class="card-content">
+                <h3>Wi-Fi Password Finder</h3>
+                <p>View all saved Wi-Fi passwords on your PC instantly.</p>
+                <a href="wifi.bat" class="dwn-btn" download>Download</a>
+            </div>
         </div>
 
         <div class="card">
-            <h3>Windows Update Control</h3>
-            <p>അപ്‌ഡേറ്റ് ഓഫ് ചെയ്യാനും ഓൺ ചെയ്യാനും.</p>
-            <a href="razact_v1.bat" class="dwn-btn green-btn" download>Download</a>
+            <img src="update.png" alt="Update Tool">
+            <div class="card-content">
+                <h3>Windows Update Manager</h3>
+                <p>Easily Enable or Disable Windows Updates with one click.</p>
+                <a href="win-update.bat" class="dwn-btn" download>Download</a>
+            </div>
         </div>
 
+        <div class="card">
+            <img src="https://via.placeholder.com/300x180?text=Coming+Soon" alt="Coming Soon">
+            <div class="card-content">
+                <h3>Network Scanner</h3>
+                <p>Scan your local network for connected devices.</p>
+                <a href="#" class="dwn-btn" style="background-color:gray;">Coming Soon</a>
+            </div>
         </div>
+
+    </div>
 
     <script>
-    // പേജ് ലോഡ് ചെയ്യുമ്പോൾ തന്നെ പരിശോധിക്കുന്നു
-    if (sessionStorage.getItem("loggedin") !== "true") {
-        alert("ദയവായി ലോഗിൻ ചെയ്യുക!");
-        window.location.href = "index.html"; // ലോഗിൻ ചെയ്തില്ലെങ്കിൽ തിരിച്ചയക്കും
-    }
+        // Security Check
+        if (sessionStorage.getItem("loggedin") !== "true") {
+            window.location.href = "index.html";
+        }
 
-    function logout() {
-        sessionStorage.removeItem("loggedin"); // ലോഗൗട്ട് ചെയ്യുമ്പോൾ താക്കോൽ കളയുന്നു
-        window.location.href = "index.html";
-    }
+        function logout() {
+            sessionStorage.removeItem("loggedin");
+            window.location.href = "index.html";
+        }
     </script>
-    
 
 </body>
 </html>
