@@ -1,4 +1,4 @@
-const CACHE_NAME = "raz-app-v1";
+const CACHE_NAME = "raz-app-v2"; // വേർഷൻ മാറ്റി v2 ആക്കി
 const urlsToCache = [
   "index.html",
   "home.html",
@@ -6,20 +6,23 @@ const urlsToCache = [
   "forgot.html",
   "icon.png",
   "wifi.png",
-  "update.png"
+  "update.png",
+  "cleaner.png",     // പുതിയത്
+  "locker.png",      // പുതിയത്
+  "organizer.png",   // പുതിയത്
+  "netinfo.png"      // പുതിയത്
 ];
 
 // Install SW
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("Opened cache");
       return cache.addAll(urlsToCache);
     })
   );
 });
 
-// Fetch requests (Offline Support)
+// Fetch requests
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
@@ -28,7 +31,7 @@ self.addEventListener("fetch", (event) => {
   );
 });
 
-// Activate SW & Clean old caches
+// Activate & Clean old cache
 self.addEventListener("activate", (event) => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
