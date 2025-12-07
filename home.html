@@ -2,91 +2,116 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Raz Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raz Tools Store</title>
     <link rel="icon" type="image/png" href="icon.png">
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; }
         
-        /* Navbar Design */
-        .navbar { background-color: #2c3e50; overflow: hidden; padding: 15px 20px; color: white; display: flex; justify-content: space-between; align-items: center; }
-        .navbar h1 { margin: 0; font-size: 24px; }
+        .navbar { background-color: #2c3e50; padding: 15px 20px; color: white; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .navbar h1 { margin: 0; font-size: 22px; }
         .logout-btn { background-color: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .logout-btn:hover { background-color: #c0392b; }
-
-        /* Welcome Message */
-        .welcome-box { text-align: center; padding: 40px; }
-        .welcome-box h2 { color: #333; }
+        
+        .welcome-box { text-align: center; padding: 30px 20px; background: white; margin-bottom: 20px; }
+        .welcome-box h2 { color: #333; margin-bottom: 5px; }
         .welcome-box p { color: #666; }
 
-        /* Tools Grid */
-        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 20px; }
+        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; max-width: 1200px; margin: auto; }
         
-        /* Card Design */
-        .card { background: white; width: 300px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; transition: transform 0.3s; text-align: center; }
-        .card:hover { transform: translateY(-5px); }
+        .card { background: white; width: 300px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); overflow: hidden; transition: transform 0.3s; text-align: center; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
         
-        /* Image inside card */
-        .card img { width: 100%; height: 180px; object-fit: cover; border-bottom: 1px solid #eee; }
+        .card img { width: 100%; height: 160px; object-fit: cover; border-bottom: 1px solid #eee; }
         
-        .card-content { padding: 20px; }
-        .card h3 { margin: 10px 0; color: #2c3e50; }
-        .card p { color: #7f8c8d; font-size: 14px; height: 40px; }
+        .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card h3 { margin: 10px 0; color: #2c3e50; font-size: 18px; }
+        .card p { color: #7f8c8d; font-size: 14px; margin-bottom: 15px; }
         
-        /* Download Button */
-        .dwn-btn { display: inline-block; background-color: #3498db; color: white; padding: 10px 25px; text-decoration: none; border-radius: 25px; margin-top: 15px; font-weight: bold; transition: 0.3s; }
-        .dwn-btn:hover { background-color: #2980b9; box-shadow: 0 4px 10px rgba(52, 152, 219, 0.4); }
+        .dwn-btn { background-color: #3498db; color: white; padding: 10px 0; text-decoration: none; border-radius: 6px; font-weight: bold; width: 100%; display: block; transition: 0.3s; }
+        .dwn-btn:hover { background-color: #2980b9; }
+
+        /* Different Colors for buttons */
+        .btn-green { background-color: #27ae60; } .btn-green:hover { background-color: #219150; }
+        .btn-orange { background-color: #e67e22; } .btn-orange:hover { background-color: #d35400; }
+        .btn-purple { background-color: #8e44ad; } .btn-purple:hover { background-color: #732d91; }
+        .btn-red { background-color: #c0392b; } .btn-red:hover { background-color: #a93226; }
 
     </style>
 </head>
 <body>
 
     <div class="navbar">
-        <h1>Raz Tools Store</h1>
+        <h1>Raz Tools</h1>
         <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 
     <div class="welcome-box">
-        <h2>Premium Batch Scripts</h2>
-        <p>Download powerful automation tools for your PC.</p>
+        <h2>All-in-One Toolkit</h2>
+        <p>Automation scripts to make your PC faster & smarter.</p>
     </div>
 
     <div class="container">
         
         <div class="card">
-            <img src="wifi.png" alt="Wifi Tool">
+            <img src="wifi.png" alt="Wifi">
             <div class="card-content">
                 <h3>Wi-Fi Password Finder</h3>
-                <p>View all saved Wi-Fi passwords on your PC instantly.</p>
+                <p>Recover saved Wi-Fi passwords.</p>
                 <a href="wifi.bat" class="dwn-btn" download>Download</a>
             </div>
         </div>
 
         <div class="card">
-            <img src="update.png" alt="Update Tool">
+            <img src="update.png" alt="Update">
             <div class="card-content">
-                <h3>Windows Update Manager</h3>
-                <p>Easily Enable or Disable Windows Updates with one click.</p>
-                <a href="win-update.bat" class="dwn-btn" download>Download</a>
+                <h3>Update Manager</h3>
+                <p>Enable/Disable Windows Updates.</p>
+                <a href="win-update.bat" class="dwn-btn btn-green" download>Download</a>
             </div>
         </div>
 
         <div class="card">
-            <img src="https://via.placeholder.com/300x180?text=Coming+Soon" alt="Coming Soon">
+            <img src="cleaner.png" alt="Cleaner">
             <div class="card-content">
-                <h3>Network Scanner</h3>
-                <p>Scan your local network for connected devices.</p>
-                <a href="#" class="dwn-btn" style="background-color:gray;">Coming Soon</a>
+                <h3>System Cleaner</h3>
+                <p>Remove junk files & speed up PC.</p>
+                <a href="cleaner.bat" class="dwn-btn btn-orange" download>Download</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="locker.png" alt="Locker">
+            <div class="card-content">
+                <h3>Folder Locker</h3>
+                <p>Create a password-protected folder.</p>
+                <a href="locker.bat" class="dwn-btn btn-purple" download>Download</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="organizer.png" alt="Organizer">
+            <div class="card-content">
+                <h3>File Organizer</h3>
+                <p>Auto-sort Images, Videos & Docs.</p>
+                <a href="organizer.bat" class="dwn-btn btn-red" download>Download</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="netinfo.png" alt="Net Info">
+            <div class="card-content">
+                <h3>Network Info</h3>
+                <p>Check IP, Ping & Connection Status.</p>
+                <a href="netinfo.bat" class="dwn-btn" style="background-color:#34495e;" download>Download</a>
             </div>
         </div>
 
     </div>
 
     <script>
-        // Security Check
         if (sessionStorage.getItem("loggedin") !== "true") {
             window.location.href = "index.html";
         }
-
         function logout() {
             sessionStorage.removeItem("loggedin");
             window.location.href = "index.html";
