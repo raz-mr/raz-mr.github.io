@@ -8,41 +8,44 @@
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; }
         
-        .navbar { background-color: #2c3e50; padding: 15px 20px; color: white; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .navbar h1 { margin: 0; font-size: 22px; }
-        .logout-btn { background-color: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .navbar { background-color: #2c3e50; padding: 10px 20px; color: white; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .navbar h1 { margin: 0; font-size: 20px; }
         
+        /* യൂസർ വിവരങ്ങൾ കാണിക്കാനുള്ള ഡിസൈൻ */
+        .user-info { display: flex; align-items: center; gap: 15px; }
+        .user-details { text-align: right; font-size: 14px; }
+        .user-name { font-weight: bold; display: block; }
+        .user-email { font-size: 12px; opacity: 0.8; display: block; }
+
+        .logout-btn { background-color: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px; }
+        
+        /* ബാക്കി സ്റ്റൈലുകൾ പഴയത് പോലെ തന്നെ... */
         .welcome-box { text-align: center; padding: 30px 20px; background: white; margin-bottom: 20px; }
         .welcome-box h2 { color: #333; margin-bottom: 5px; }
         .welcome-box p { color: #666; }
-
         .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; max-width: 1200px; margin: auto; }
-        
         .card { background: white; width: 300px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); overflow: hidden; transition: transform 0.3s; text-align: center; display: flex; flex-direction: column; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        
         .card img { width: 100%; height: 160px; object-fit: cover; border-bottom: 1px solid #eee; }
-        
         .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .card h3 { margin: 10px 0; color: #2c3e50; font-size: 18px; }
         .card p { color: #7f8c8d; font-size: 14px; margin-bottom: 15px; }
-        
         .dwn-btn { background-color: #3498db; color: white; padding: 10px 0; text-decoration: none; border-radius: 6px; font-weight: bold; width: 100%; display: block; transition: 0.3s; }
         .dwn-btn:hover { background-color: #2980b9; }
-
-        /* Different Colors for buttons */
-        .btn-green { background-color: #27ae60; } .btn-green:hover { background-color: #219150; }
-        .btn-orange { background-color: #e67e22; } .btn-orange:hover { background-color: #d35400; }
-        .btn-purple { background-color: #8e44ad; } .btn-purple:hover { background-color: #732d91; }
-        .btn-red { background-color: #c0392b; } .btn-red:hover { background-color: #a93226; }
-
     </style>
 </head>
 <body>
 
     <div class="navbar">
         <h1>Raz Tools</h1>
-        <button class="logout-btn" onclick="logout()">Logout</button>
+        
+        <div class="user-info">
+            <div class="user-details">
+                <span id="dispName" class="user-name">User</span>
+                <span id="dispEmail" class="user-email">email@example.com</span>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
     </div>
 
     <div class="welcome-box">
@@ -51,69 +54,28 @@
     </div>
 
     <div class="container">
-        
         <div class="card">
             <img src="wifi.png" alt="Wifi">
             <div class="card-content">
                 <h3>Wi-Fi Password Finder</h3>
                 <p>Recover saved Wi-Fi passwords.</p>
-                <a href="wifi.bat" class="dwn-btn" download>Download</a>
+                <a href="wifi.exe" class="dwn-btn" download>Download</a>
             </div>
         </div>
-
-        <div class="card">
-            <img src="update.png" alt="Update">
-            <div class="card-content">
-                <h3>Update Manager</h3>
-                <p>Enable/Disable Windows Updates.</p>
-                <a href="win-update.bat" class="dwn-btn btn-green" download>Download</a>
-            </div>
         </div>
-
-        <div class="card">
-            <img src="cleaner.png" alt="Cleaner">
-            <div class="card-content">
-                <h3>System Cleaner</h3>
-                <p>Remove junk files & speed up PC.</p>
-                <a href="cleaner.bat" class="dwn-btn btn-orange" download>Download</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="locker.png" alt="Locker">
-            <div class="card-content">
-                <h3>Folder Locker</h3>
-                <p>Create a password-protected folder.</p>
-                <a href="locker.bat" class="dwn-btn btn-purple" download>Download</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="organizer.png" alt="Organizer">
-            <div class="card-content">
-                <h3>File Organizer</h3>
-                <p>Auto-sort Images, Videos & Docs.</p>
-                <a href="organizer.bat" class="dwn-btn btn-red" download>Download</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="netinfo.png" alt="Net Info">
-            <div class="card-content">
-                <h3>Network Info</h3>
-                <p>Check IP, Ping & Connection Status.</p>
-                <a href="netinfo.bat" class="dwn-btn" style="background-color:#34495e;" download>Download</a>
-            </div>
-        </div>
-
-    </div>
 
     <script>
+        // ലോഗിൻ ചെക്കിംഗ്
         if (sessionStorage.getItem("loggedin") !== "true") {
             window.location.href = "index.html";
+        } else {
+            // പേരും ഇമെയിലും കാണിക്കുന്നു
+            document.getElementById("dispName").innerText = sessionStorage.getItem("userName");
+            document.getElementById("dispEmail").innerText = sessionStorage.getItem("userEmail");
         }
+
         function logout() {
-            sessionStorage.removeItem("loggedin");
+            sessionStorage.clear(); // എല്ലാം മായ്ക്കുന്നു
             window.location.href = "index.html";
         }
     </script>
