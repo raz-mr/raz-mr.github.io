@@ -33,8 +33,11 @@
 
         <div id="step3" class="hidden">
             <p style="color:green;">Verified! ✅</p>
-            <input type="text" id="fullName" placeholder="Enter your Name" required> 
-            <input type="password" id="password" placeholder="Set a Password">
+            <p style="font-size:14px; color:#666;">Finish Account Setup</p>
+            
+            <input type="text" id="fullName" placeholder="Enter your Full Name" required> 
+            <input type="password" id="password" placeholder="Set a Password (min 6 chars)" required>
+            
             <button onclick="registerUser()">Create Account</button>
         </div>
 
@@ -44,7 +47,6 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        // updateProfile കൂടി ഇംപോർട്ട് ചെയ്യുന്നു
         import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -65,10 +67,10 @@
     </script>
 
     <script>
-        // 🔴 നിങ്ങളുടെ EmailJS വിവരങ്ങൾ ഇവിടെ കൊടുക്കുക
-        const SERVICE_ID = "service_4doax5s";
-        const TEMPLATE_ID = "template_clkohja";
-        const PUBLIC_KEY = "-qnMPfPi-0aLGnLXB";
+        // 🔴 പ്രധാനം: താഴെ നിങ്ങളുടെ EmailJS ഐഡികൾ പേസ്റ്റ് ചെയ്യുക
+        const SERVICE_ID = "service_4doax5s";   // മാറ്റി നിങ്ങളുടെ ഐഡി നൽകുക
+        const TEMPLATE_ID = "template_clkohja"; // മാറ്റി നിങ്ങളുടെ ഐഡി നൽകുക
+        const PUBLIC_KEY = "-qnMPfPi-0aLGnLXB";   // മാറ്റി നിങ്ങളുടെ കീ നൽകുക
 
         emailjs.init(PUBLIC_KEY);
 
@@ -88,14 +90,13 @@
 
             emailjs.send(SERVICE_ID, TEMPLATE_ID, params)
                 .then(() => {
-                    alert("OTP sent!");
+                    alert("OTP sent to " + email);
                     document.getElementById("step1").classList.add("hidden");
                     document.getElementById("step2").classList.remove("hidden");
                 })
                 .catch((err) => {
                     btn.innerText = "Send OTP";
-                    msg.innerText = "Error sending email.";
-                    console.error(err);
+                    alert("EmailJS Error: " + JSON.stringify(err)); // എറർ വന്നാൽ കാണിക്കും
                 });
         }
 
@@ -105,24 +106,24 @@
                 document.getElementById("step2").classList.add("hidden");
                 document.getElementById("step3").classList.remove("hidden");
             } else {
-                alert("Wrong OTP!");
+                alert("Wrong OTP! Please try again.");
             }
         }
 
         function registerUser() {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
-            const name = document.getElementById("fullName").value; // പേര് എടുക്കുന്നു
+            const name = document.getElementById("fullName").value;
 
-            if(!name) { alert("Please enter your name!"); return; }
+            if(!name || !password) { alert("Please fill all details!"); return; }
+            if(password.length < 6) { alert("Password must be at least 6 characters!"); return; }
 
             window.createUserWithEmailAndPassword(window.auth, email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    // പേര് ഫയർബേസിൽ അപ്‌ഡേറ്റ് ചെയ്യുന്നു
                     window.updateProfile(user, { displayName: name })
                     .then(() => {
-                        alert("Account Created! Login now.");
+                        alert("Account Created Successfully! Login now.");
                         window.location.href = "index.html";
                     });
                 })
