@@ -60,7 +60,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // ലോഗിൻ ഫംഗ്‌ഷൻ (ഇമെയിൽ വെച്ച്)
+             // ലോഗിൻ ഫംഗ്‌ഷൻ
         window.loginUser = function() {
             const email = document.getElementById("email").value;
             const pass = document.getElementById("password").value;
@@ -68,12 +68,16 @@
 
             signInWithEmailAndPassword(auth, email, pass)
             .then((userCredential) => {
-                // ലോഗിൻ വിജയിച്ചു
+                const user = userCredential.user;
+                
+                // 🔴 ഇവിടെയാണ് പേരും ഇമെയിലും സേവ് ചെയ്യുന്നത്
                 sessionStorage.setItem("loggedin", "true");
+                sessionStorage.setItem("userName", user.displayName || "User"); // പേര്
+                sessionStorage.setItem("userEmail", user.email);       // ഇമെയിൽ
+
                 window.location.href = "home.html";
             })
             .catch((error) => {
-                // ലോഗിൻ പരാജയപ്പെട്ടു
                 console.log(error.code);
                 errorMsg.style.display = "block";
                 errorMsg.innerText = "Email or Password is  incorrect!";
